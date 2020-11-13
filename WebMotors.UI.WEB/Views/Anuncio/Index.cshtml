@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebMotors.UI.WEB.Models.AnuncioMOD>
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<p>
+    <a asp-action="Cadastrar">Criar Novo Anúncio</a>
+</p>
+@{
+    //verifica se tem anúncios
+    if (Model.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.marca_nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.modelo_nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.versao_nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ano)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.quilometragem)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.observacao)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.marca_nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.modelo_nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.versao_nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ano)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.quilometragem)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.observacao)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
+                            @Html.ActionLink("Detalhes", "Detalhes", new { id = item.ID }) |
+                            @Html.ActionLink("Excluir", "Excluir", new { id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    //se não tem anúncios, exibe mensagem
+    else
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="alert alert-danger">
+                        <span class="font-weight-bold">Ops! Nenhum anúncio encontrado.</span><br/>
+                        Clique sobre o botão acima para cadastrar um novo anúncio.
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,115 @@
+﻿@model WebMotors.UI.WEB.Models.AnuncioMOD
+
+@{
+    ViewData["Title"] = "Editar";
+}
+<br />
+<h2>Editar Anúncio</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="marca" class="control-label"></label>
+                <select asp-for="marca" asp-items="@ViewBag.Marcas" class="form-control">
+                    <option value="">Selecione a marca</option>
+                </select>
+                <span asp-validation-for="marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="modelo" class="control-label"></label>
+                <select asp-for="modelo" asp-items="@ViewBag.Modelos" class="form-control">
+                    <option value="">Selecione o modelo</option>
+                </select>
+                <span asp-validation-for="modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="versao" class="control-label"></label>
+                <select asp-for="versao" asp-items="@ViewBag.Versoes" class="form-control">
+                    <option value="">Selecione a versão</option>
+                </select>
+                <span asp-validation-for="versao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ano" class="control-label"></label>
+                <input asp-for="ano" class="form-control" placeholder="Informe o ano" />
+                <span asp-validation-for="ano" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="quilometragem" class="control-label"></label>
+                <input asp-for="quilometragem" class="form-control" placeholder="Informe a quilometragem" />
+                <span asp-validation-for="quilometragem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="observacao" class="control-label"></label>
+                <textarea asp-for="observacao" rows="5" class="form-control" placeholder="Descreva observações sobre o anúncio"></textarea>
+                <span asp-validation-for="observacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Retornar para Lista</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        //quando mudar a marca, busca os modelos
+        $("#marca").change(function () {
+            var codMarca = $(this).val();//código da marca
+            $.ajax({
+                url: "@Url.Action("GetModelosPorMarcaJSON")",
+                method: "GET",
+                data: {
+                    marca: codMarca
+                },
+                cache: false,
+                success: function (resposta) {
+                    //limpa a lista e popula com os modelos encontrados
+                    $lista = $("#modelo");
+                    $lista.empty();
+                    $lista.append('<option value="">Selecione o modelo</option>');
+                    $.each(resposta, function (i, item) {
+                        var id = item.id.toString();
+                        $lista.append('<option value="' + id + '"> ' + item.name + ' </option>');
+                    });
+                    $("#versao").empty();
+                    $("#versao").append('<option value="">Selecione a versão</option>');
+                },
+                error: function () {
+                    alert("Modelos não localizados. Por favor, tente novamente");
+                }
+            });
+        });
+
+        //quando mudar o modelo, busca as versões
+        $("#modelo").change(function () {
+            var codModelo = $(this).val();//código do modelo
+            $.ajax({
+                url: "@Url.Action("GetVersoesPorModeloJSON")",
+                method: "GET",
+                data: {
+                    modelo: codModelo
+                },
+                cache: false,
+                success: function (resposta) {
+                    //limpa a lista e popula com as versões encontradas
+                    $lista = $("#versao");
+                    $lista.empty();
+                    $lista.append('<option value="">Selecione a versão</option>');
+                    $.each(resposta, function (i, item) {
+                        var id = item.id.toString();
+                        $lista.append('<option value="' + id + '"> ' + item.name + ' </option>');
+                    });
+                },
+                error: function () {
+                    alert("Versões não localizadas. Por favor, tente novamente");
+                }
+            });
+        });
+    </script>
+}
