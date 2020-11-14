@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<WebMotors.UI.WEB.Models.AnuncioMOD>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Anúncios";
 }
 <br />
 <p>
-    <a asp-action="Cadastrar">Criar Novo Anúncio</a>
+    <a asp-action="Cadastrar" class="btn btn-danger">Criar Novo Anúncio</a>
 </p>
 @{
     //verifica se tem anúncios
     if (Model.Count() > 0)
     {
         <table class="table">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.ID)
@@ -27,12 +27,6 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ano)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.quilometragem)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.observacao)
                     </th>
                     <th></th>
                 </tr>
@@ -55,12 +49,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ano)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.quilometragem)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.observacao)
                         </td>
                         <td>
                             @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |

@@ -1,8 +1,27 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    font-family: Poppins,sans-serif;
+}
+
+.btn-link-white {
+  font-weight: 400;
+  color: white;
+  text-decoration: none;
+}
+
+.btn-link-white:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.btn-link-white:focus, .btn-link-white.focus {
+  text-decoration: underline;
+}
+
+.btn-link-white:disabled, .btn-link-white.disabled {
+  color: #CCC;
+  pointer-events: none;
 }
 
 /* Wrapping element */
@@ -34,4 +53,11 @@ body {
     .carousel-caption {
         display: none;
     }
+}
+footer a {
+    font-size:70%;
+}
+footer h6 {
+    color:white;
+    font-weight:bold;
 }
