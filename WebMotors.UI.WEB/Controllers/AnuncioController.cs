@@ -37,7 +37,6 @@ namespace WebMotors.UI.WEB.Controllers
                 if (versoes.Where(x => x.ID == anuncio.versao).Count() > 0)
                     anuncio.versao_nome = versoes.FirstOrDefault(x => x.ID == anuncio.versao).name;
             }
-
             return View(listaAnuncios);
         }
 
@@ -88,12 +87,25 @@ namespace WebMotors.UI.WEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Cadastrar([Bind] AnuncioMOD anuncio)
         {
-            if (ModelState.IsValid)
+            try
             {
-                ianuncio.AddAnuncio(anuncio);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    ianuncio.AddAnuncio(anuncio);
+                    TempData.Add("Mensagem-Sucesso-Alerta", "Anúncio cadastrado com sucesso!");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(anuncio);
+                }
             }
-            return View(anuncio);
+            catch (System.Exception)
+            {
+                TempData.Add("Mensagem-Erro-Alerta", "Ops! Ocorreu um erro ao tentar cadastrar seu anúncio!");
+                return View(anuncio);
+                throw;
+            }
         }
 
         /// <summary>
@@ -128,15 +140,28 @@ namespace WebMotors.UI.WEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Editar(int id, [Bind]AnuncioMOD anuncio)
         {
-            if (id != anuncio.ID)
-                return NotFound();
-
-            if(ModelState.IsValid)
+            try
             {
-                ianuncio.UpdateAnuncio(anuncio);
-                return RedirectToAction("Index");
+                if (id != anuncio.ID)
+                    return NotFound();
+
+                if (ModelState.IsValid)
+                {
+                    ianuncio.UpdateAnuncio(anuncio);
+                    TempData.Add("Mensagem-Sucesso-Alerta", "Anúncio atualizado com sucesso!");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(anuncio);
+                }
             }
-            return View(anuncio);
+            catch (System.Exception)
+            {
+                TempData["Mensagem-Erro-Alerta"] = "Ops! Ocorreu um erro ao tentar atualizar seu anúncio!";
+                return RedirectToAction("Editar", new { id });
+                throw;
+            }
         }
 
         /// <summary>
@@ -151,6 +176,12 @@ namespace WebMotors.UI.WEB.Controllers
                 return NotFound();
 
             AnuncioMOD anuncio = ianuncio.GetAnuncio(id);
+            anuncio.marca_nome = ianuncio.GetMarcas().FirstOrDefault(x => x.ID == anuncio.marca).name;
+            anuncio.modelo_nome = ianuncio.GetModelos(anuncio.marca).FirstOrDefault(x => x.ID == anuncio.modelo).name;
+            //verifica a versão do veículo
+            var versoes = ianuncio.GetVersoes(anuncio.modelo);
+            if (versoes.Where(x => x.ID == anuncio.versao).Count() > 0)
+                anuncio.versao_nome = versoes.FirstOrDefault(x => x.ID == anuncio.versao).name;
 
             if (anuncio == null)
                 return NotFound();
@@ -167,7 +198,15 @@ namespace WebMotors.UI.WEB.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ExcluirConfirmar(int? id)
         {
-            ianuncio.DeleteAnuncio(id);
+            try
+            {
+                ianuncio.DeleteAnuncio(id);
+                TempData.Add("Mensagem-Sucesso-Alerta", "Anúncio excluído com sucesso");
+            }
+            catch (System.Exception)
+            {
+                TempData.Add("Mensagem-Erro-Alerta", "Ops! Ocorreu um erro ao tentar excluir");
+            }
             return RedirectToAction("Index");
         }
 

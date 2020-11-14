@@ -8,7 +8,8 @@ namespace WebMotors.UI.WEB.Models
 {
     public sealed class AnuncioREP : IAnuncioREP
     {
-        string connectionString = @"server=localhost;port=3307;user=root;password=;database=teste_webmotors";
+        //recuperamos a ConnectionString
+        string connectionString = new PathStringsMOD().ConnectionString();
 
         /// <summary>
         /// recupera todos os anúncios
@@ -195,7 +196,7 @@ namespace WebMotors.UI.WEB.Models
         public List<MarcaMOD> GetMarcas()
         {
             List<MarcaMOD> listaMarcas = new List<MarcaMOD>();
-            string url = "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Make";
+            string url = new PathStringsMOD().PathAPIMake();
 
             using (var client = new HttpClient())
             {
@@ -214,7 +215,7 @@ namespace WebMotors.UI.WEB.Models
         public List<ModeloMOD> GetModelos(int marca)
         {
             List<ModeloMOD> listaModelos = new List<ModeloMOD>();
-            string url = "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Model?MakeID=" + marca;
+            string url = String.Format("{0}{1}", new PathStringsMOD().PathAPIModel(), marca);
 
             using (var client = new HttpClient())
             {
@@ -233,7 +234,7 @@ namespace WebMotors.UI.WEB.Models
         public List<VersaoMOD> GetVersoes(int modelo)
         {
             List<VersaoMOD> listaVersoes = new List<VersaoMOD>();
-            string url = "http://desafioonline.webmotors.com.br/api/OnlineChallenge/Version?ModelID=" + modelo;
+            string url = String.Format("{0}{1}", new PathStringsMOD().PathAPIVersion(), modelo);
 
             using (var client = new HttpClient())
             {

@@ -5,7 +5,7 @@
 }
 <br />
 <h2>Excluir Anúncio</h2>
-<h3>Tem certeza que deseja excluir este anúncio?</h3>
+<h4 class="text-danger">Tem certeza que deseja excluir este anúncio?</h4>
 <hr />
 <div>
     <dl class="dl-horizontal">
@@ -16,22 +16,22 @@
             @Html.DisplayFor(model => model.ID)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.marca)
+            @Html.DisplayNameFor(model => model.marca_nome)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.marca)
+            @Html.DisplayFor(model => model.marca_nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.modelo)
+            @Html.DisplayNameFor(model => model.modelo_nome)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.modelo)
+            @Html.DisplayFor(model => model.modelo_nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.versao)
+            @Html.DisplayNameFor(model => model.versao_nome)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.versao)
+            @Html.DisplayFor(model => model.versao_nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.ano)
@@ -55,6 +55,10 @@
 </div>
 
 <form asp-action="Excluir">
-    <input type="submit" value="Excluir" class="btn btn-default" /> |
-    <a asp-action="Index">Retorna para a Lista</a>
+    <button type="submit" class="p-2 btn btn-danger">
+        Confirmar Exclusão <i class="material-icons ml-2 float-right">check</i>
+    </button>
 </form>
+<div class="mt-3">
+    <a asp-area="" asp-controller="Anuncio" asp-action="Index" class="p-2 btn btn-outline-secondary">Retornar para a Lista <i class="material-icons ml-2 float-right">undo</i></a>
+</div>

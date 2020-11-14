@@ -1,0 +1,41 @@
+﻿@{
+    //exibe mensagem de sucesso
+    if (TempData["Mensagem-Sucesso-Alerta"] != null)
+    {
+        <script>
+            $(function () {
+                $("#CaixaSucesso").fadeIn();
+
+                setTimeout(function () {
+                    $("#CaixaSucesso").fadeOut();
+                }, 10000);
+            });
+        </script>
+        <div id="CaixaSucesso" class="alert alert-success border border-color-green border-radius-25 mb-4 text-left" style="display:none">
+            <div class="row">
+                <div class="col-auto"><span class="fas fa-check-circle text-green"></span></div>
+                <div class="col-auto pl-0">@Html.Raw(TempData["Mensagem-Sucesso-Alerta"])</div>
+            </div>
+        </div>
+    }
+
+    //exibe mensagem de erro
+    if (TempData["Mensagem-Erro-Alerta"] != null)
+    {
+        <script>
+            $(function () {
+                $("#CaixaErro").fadeIn();
+
+                setTimeout(function () {
+                    $("#CaixaErro").fadeOut();
+                }, 10000);
+            });
+        </script>
+        <div id="CaixaErro" class="alert alert-danger border border-color-pink border-radius-25 mb-4 text-left" style="display:none">
+            <div class="row">
+                <div class="col-auto"><span class="fas fa-exclamation-triangle text-pink"></span></div>
+                <div class="col-auto pl-0">@Html.Raw(TempData["Mensagem-Erro-Alerta"])</div>
+            </div>
+        </div>
+    }
+}
