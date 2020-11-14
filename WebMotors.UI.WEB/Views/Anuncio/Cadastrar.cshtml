@@ -11,55 +11,68 @@
         <form asp-action="Cadastrar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="marca" class="control-label"></label>
+                <label asp-for="marca"></label>
                 <select asp-for="marca" asp-items="@ViewBag.Marcas" class="form-control">
                     <option value="">Selecione a marca</option>
                 </select>
                 <span asp-validation-for="marca" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="modelo" class="control-label"></label>
+                <label asp-for="modelo"></label>
+                <div id="loading-models" class="float-right" style="display:none;">
+                    <svg class="spinner" width="20px" height="20px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                </div>
                 <select asp-for="modelo" asp-items="@ViewBag.Modelos" class="form-control">
                     <option value="">Selecione o modelo</option>
                 </select>
                 <span asp-validation-for="modelo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="versao" class="control-label"></label>
+                <label asp-for="versao"></label>
+                <div id="loading-versions" class="float-right" style="display:none;">
+                    <svg class="spinner" width="20px" height="20px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                </div>
                 <select asp-for="versao" asp-items="@ViewBag.Versoes" class="form-control">
                     <option value="">Selecione a versão</option>
                 </select>
                 <span asp-validation-for="versao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ano" class="control-label"></label>
+                <label asp-for="ano"></label>
                 <input asp-for="ano" class="form-control" placeholder="Informe o ano" />
                 <span asp-validation-for="ano" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="quilometragem" class="control-label"></label>
+                <label asp-for="quilometragem"></label>
                 <input asp-for="quilometragem" class="form-control" placeholder="Informe a quilometragem" />
                 <span asp-validation-for="quilometragem" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="observacao" class="control-label"></label>
+                <label asp-for="observacao"></label>
                 <textarea asp-for="observacao" rows="5" class="form-control" placeholder="Descreva observações sobre o anúncio"></textarea>
                 <span asp-validation-for="observacao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-default" />
+                <button type="submit" class="p-2 btn btn-danger">
+                    Cadastrar Anúncio <i class="material-icons ml-2 float-right">check</i>
+                </button>
             </div>
         </form>
     </div>
 </div>
 <div>
-    <a asp-action="Index">Retornar para Lista</a>
+    <a asp-area="" asp-controller="Anuncio" asp-action="Index" class="p-2 btn btn-outline-secondary">Retornar para a Lista <i class="material-icons ml-2 float-right">undo</i></a>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         //quando mudar a marca, busca os modelos
         $("#marca").change(function () {
+            $("#loading-models").show();
             var codMarca = $(this).val();//código da marca
             $.ajax({
                 url: "@Url.Action("GetModelosPorMarcaJSON")",
@@ -79,15 +92,18 @@
                     });
                     $("#versao").empty();
                     $("#versao").append('<option value="">Selecione a versão</option>');
+                    $("#loading-models").hide();
                 },
                 error: function () {
                     alert("Modelos não localizados. Por favor, tente novamente");
+                    $("#loading-models").hide();
                 }
             });
         });
 
         //quando mudar o modelo, busca as versões
         $("#modelo").change(function () {
+            $("#loading-versions").show();
             var codModelo = $(this).val();//código do modelo
             $.ajax({
                 url: "@Url.Action("GetVersoesPorModeloJSON")",
@@ -105,9 +121,11 @@
                         var id = item.id.toString();
                         $lista.append('<option value="' + id + '"> ' + item.name + ' </option>');
                     });
+                    $("#loading-versions").hide();
                 },
                 error: function () {
                     alert("Versões não localizadas. Por favor, tente novamente");
+                    $("#loading-versions").hide();
                 }
             });
         });

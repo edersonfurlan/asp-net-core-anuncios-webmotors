@@ -2,9 +2,8 @@
 @{
     ViewData["Title"] = "Anúncios";
 }
-<br />
-<p>
-    <a asp-action="Cadastrar" class="btn btn-danger">Criar Novo Anúncio</a>
+<p class="my-4">
+    Consulte abaixo sua lista de anúncios
 </p>
 @{
     //verifica se tem anúncios
@@ -13,6 +12,9 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
+                    <th class="text-center">
+                        Consultar
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.ID)
                     </th>
@@ -28,34 +30,44 @@
                     <th>
                         @Html.DisplayNameFor(model => model.ano)
                     </th>
-                    <th></th>
+                    <th class="text-center">
+                        Gerenciar
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.marca_nome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.modelo_nome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.versao_nome)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ano)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
-                            @Html.ActionLink("Detalhes", "Detalhes", new { id = item.ID }) |
-                            @Html.ActionLink("Excluir", "Excluir", new { id = item.ID })
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="align-middle text-center">
+                        <a asp-area="" asp-controller="Anuncio" asp-action="Detalhes" asp-route-id="@item.ID" class="btn btn-link-danger">
+                            <i class="material-icons display-5">find_in_page</i>
+                        </a>
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.marca_nome)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.modelo_nome)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.versao_nome)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.ano)
+                    </td>
+                    <td class="align-middle text-center">
+                        <a asp-area="" asp-controller="Anuncio" asp-action="Editar" asp-route-id="@item.ID" class="btn btn-link-danger">
+                            <i class="material-icons display-5">edit</i>
+                        </a>
+                        <a asp-area="" asp-controller="Anuncio" asp-action="Excluir" asp-route-id="@item.ID" class="btn btn-link-danger">
+                            <i class="material-icons display-5">delete_forever</i>
+                        </a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

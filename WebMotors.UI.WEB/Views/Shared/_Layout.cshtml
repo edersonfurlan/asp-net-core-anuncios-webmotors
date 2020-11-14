@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webmotors | @ViewData["Title"]</title>
-    <link rel="shortcut icon" href="~/images/icone.png">
+    <link rel="shortcut icon" href="~/favicon.ico">
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&amp;display=swap" rel="stylesheet" crossorigin="crossorigin">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -24,9 +25,9 @@
             <img src="~/images/logo.svg" />
         </a>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a asp-area="" asp-controller="Anuncio" asp-action="Index" class="p-2 text-dark">Anúncios</a>
+            <a asp-area="" asp-controller="Anuncio" asp-action="Index" class="p-2 text-dark mr-2">Meus Anúncios</a>
+            <a asp-area="" asp-controller="Anuncio" asp-action="Cadastrar" class="p-2 btn btn-danger">Anunciar <i class="material-icons ml-2 float-right">campaign</i></a>
         </nav>
-        <a class="btn btn-outline-danger" href="https://login.webmotors.com.br/?&r:https://www.webmotors.com.br&inst=header:webmotors::logar-ou-cadastrar" target="_blank">Entrar</a>
     </div>
     <div class="container body-content my-4">
         @RenderBody()
